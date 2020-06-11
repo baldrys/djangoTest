@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+    <a href="{% url 'users' %}">Back to users</a>
+
+	<h1>User</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">id</th>
+				<th scope="col">User name</th>
+				<th scope="col">Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">{{ user.id }}</th>
+				<td>{{ user.name }}</td>
+				<td>{{ user.totalReward }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<h2>Make payout</h2>
+	<form method="POST">
+        {% csrf_token %}
+            {% if sent %}
+        <div class="alert alert-success" role="alert">
+            Payout have been send!
+        </div>
+    {% endif %} 
+    {% if form.errors %}
+        {% for field in form %}
+
+            {% for error in field.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{field.label}}: {{ error|escape }}
+                </div>
+                
+            {% endfor %}
+
+        {% endfor %}
+    {% endif %}
+        <div class="form-group" class="hidden">
+            {{ form.user }}
+        </div>
+    
+        <div class="form-group">
+            <label>Account</label>
+            {{ form.account }}
+        </div>
+        <div class="form-group">
+            <label>Amount</label>
+            {{ form.amount }}
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+{% endblock content %}

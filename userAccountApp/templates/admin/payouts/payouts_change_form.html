@@ -1,0 +1,14 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% block object-tools %}
+    
+{% if original.status == False %}
+    <form action="{% url 'admin:process-payout' id=original.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Process payout" />
+  </form>
+
+{% endif %}
+
+{{ block.super }}
+{% endblock %}
